@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,8 @@ public class DeviceDisplayAdapter extends BaseAdapter {
     Context context;
     String username;
 
-    public DeviceDisplayAdapter(Context context, String username) {
+    public DeviceDisplayAdapter(Context context) {
         this.context = context;
-        this.username = username;
     }
 
     public void add(Device dvc) {
@@ -60,6 +60,10 @@ public class DeviceDisplayAdapter extends BaseAdapter {
         holder.signal.setText( dvc.getSignalString() );
 
         return convertView;
+    }
+
+    protected void doToast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }
 

@@ -8,4 +8,11 @@
     <string name="device_list_item_signal">!Signal_String!</string>
     <string name="device_list_item_name">!Device_Name!</string>
     <string name="device_list_item_mac">!MAC_Address!</string>
+
+
+    <string name="menu_scan">Start Scan</string>
+    <string name="menu_unscan">Stop Scan</string>
+    <string name="menu_connect">Connect</string>
+    <string name="menu_disconnect">Disconnect</string>
+
 </resources>

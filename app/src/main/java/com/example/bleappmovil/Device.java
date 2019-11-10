@@ -5,6 +5,12 @@ public class Device {
     private String mac;
     private int signal;
 
+    public Device(String name, String mac, int signal) {
+        this.name = name;
+        this.mac = mac;
+        this.signal = signal;
+    }
+
     public String getName() {
         return name;
     }

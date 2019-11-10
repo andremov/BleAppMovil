@@ -6,64 +6,101 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
-            >
+        <TextView
+            android:id="@+id/app_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/app_title"
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/app_name"
-                android:textStyle="bold"
-                android:textSize="30sp"
-                android:textColor="@android:color/white"
-                />
+        <Space
+            android:layout_width="90dp"
+            android:layout_height="@dimen/toolbar_height" />
 
-            <Space
-                android:layout_width="80dp"
-                android:layout_height="@dimen/toolbar_height" />
+        <Button
+            android:id="@+id/supported_btn"
+            android:layout_width="@dimen/toolbar_btn_size"
+            android:layout_height="@dimen/toolbar_btn_size"
+            android:background="@color/colorPrimaryDark"
+            android:foreground="@drawable/yes"
+            android:foregroundTint="@color/good">
 
-            <Button
-                android:id="@+id/supported_btn"
-                android:layout_width="@dimen/toolbar_height"
-                android:layout_height="@dimen/toolbar_height"
-                android:background="@color/colorPrimaryDark"
-                />
+        </Button>
 
-            <Space
-                android:layout_width="10dp"
-                android:layout_height="@dimen/toolbar_height" />
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="@dimen/toolbar_height" />
 
-            <Button
-                android:id="@+id/enable_bluetooth_btn"
-                android:layout_width="@dimen/toolbar_height"
-                android:layout_height="@dimen/toolbar_height"
-                android:background="@color/colorPrimaryDark"
-                />
+        <Button
+            android:id="@+id/toggle_bluetooth_btn"
+            android:layout_width="@dimen/toolbar_btn_size"
+            android:layout_height="@dimen/toolbar_btn_size"
+            android:background="@color/colorPrimaryDark"
+            android:foreground="@drawable/bluetooth"
+            android:foregroundTint="@color/good">
 
-        </androidx.appcompat.widget.Toolbar>
+        </Button>
 
-
-
-    </com.google.android.material.appbar.AppBarLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <ListView
+        android:id="@+id/device_listing"
+        android:nestedScrollingEnabled="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="650dp"
+        android:layout_marginTop="50dp"
+
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+
+        android:divider="@android:color/white"
+        android:dividerHeight="10dp" >
+
+    </ListView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_fab"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+
+        android:src="@drawable/settings"
+        android:tint="@android:color/white"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+
+        app:layout_constraintVertical_bias="0.95">
+
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <View
+        android:id="@+id/fab_menu_view"
+        android:layout_width="@dimen/menu_height"
+        android:layout_height="@dimen/menu_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.84000003" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
