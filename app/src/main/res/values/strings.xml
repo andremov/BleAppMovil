@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">BLE App</string>
+    <string name="app_logs">BLE App Logs</string>
 
     <string name="log_item_timestamp">!Timestamp!</string>
     <string name="log_item_type">!Type!</string>
@@ -14,5 +15,8 @@
     <string name="menu_unscan">Stop Scan</string>
     <string name="menu_connect">Connect</string>
     <string name="menu_disconnect">Disconnect</string>
+
+    <string name="logs_btn">Logs</string>
+    <string name="back_btn">Back</string>
 
 </resources>

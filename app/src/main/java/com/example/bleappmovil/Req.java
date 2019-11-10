@@ -16,7 +16,7 @@ public class Req {
     TODO: MAX
 
     • After all the requirements are met, the application must show a first screen that list all the
-    detected BLE devices and this list must be updated as new devices are detected; each list item
+    detected BLE messages and this list must be updated as new messages are detected; each list item
     must show the BLE MAC, Device Name and the signal strength (must be dynamically updated)
     UI: DONE!
     TODO: MAX
@@ -28,15 +28,19 @@ public class Req {
         o Stop LE scan
         o Connect BLE device
         o Disconnect from BLE device
+    UI: DONE!
+    TODO: MAX
 
 
-    • When long-click on an item of the detected devices list, the app must try to connect the device
+    • When long-click on an item of the detected messages list, the app must try to connect the device
     showing always information about the connection process and its errors or events
+    DONE!
 
 
     • After successfully connecting a BLE device, the app must discover and list all the services
     published by the BLE device; the list of services must be shown at a fragment or a new screen
     (the floating button must be always visible).
+    TODO: MAX
 
 
     • When long-click on an item of the services list, the app must shows on a fragment or a new
@@ -46,17 +50,21 @@ public class Req {
 
     • The app must subscribe itself to be notified to all characteristics of the service which has the
     notify property enabled
+    TODO: MAX
 
 
     • The app must be able to read and write the characteristic of a service and must shows the read
     and write statuses on the screen
+    TODO: MAX
 
 
     • The app must show notifications when characteristic with notify property enabled changes
+    TODO: MAX
 
 
     • The app must have a events log that shows all the BLE connection, transactions and errors
     events
+    DONE!
 
 
      */

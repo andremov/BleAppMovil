@@ -3,6 +3,7 @@ package com.example.bleappmovil;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,16 +12,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     DeviceDisplayAdapter adapter;
     ListView devicesView;
+
+    public static List<LogMessage> log = new ArrayList<>();
+
     boolean bluetoothOn = true;
     boolean bluetoothSupport = true;
     int selectedDevice;
@@ -41,6 +49,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         toggleSupportBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onSupportedBtnTap();
+            }
+        });
+
+        Button logsBtn = (Button) findViewById(R.id.logs_btn);
+        logsBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent callingIntent =new Intent(getApplicationContext(), LogActivity.class);
+                startActivity(callingIntent);
             }
         });
 
@@ -71,6 +87,24 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         });
 
         scanDevices();
+        testingValues();
+    }
+
+    protected void testingValues() {
+        // TESTING BULLSHIT INCOMING:
+
+        for (int i = 0; i < 20; i++) {
+            deviceFound(new Device("Name" + i, "Mac!" + i, i % 4));
+        }
+
+
+        for (int i = 0; i < 20; i++) {
+            logEvent(new LogMessage("Log Event Message " + i, "Today", "INFO"));
+        }
+    }
+
+    protected void logEvent(LogMessage msg) {
+        MainActivity.log.add(msg);
     }
 
     public void setSelectedDevice(int selectedDevice) {
@@ -113,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     protected void connectDevice() {
         Device dvc = getSelectedDevice();
-        
+
         // TODO: CODIGO PARA CONECTAR A DEVICE <3
 
 
@@ -149,21 +183,33 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     protected void scanDevices() {
-        // TODO: LOGICA DE SCAN DE DEVICES, HAZ UN OBJETO Device Y MANDALO A DeviceFound()
+        // TODO: LOGICA DE SCAN DE DEVICES, HAZ UN OBJETO Device Y MANDALO A deviceFound()
 
-        // TESTING BULLSHIT INCOMING:
-        for (int i = 0; i < 20; i++) {
-            DeviceFound(new Device("Name" + i, "Mac!" + i, i % 4));
-        }
 
+
+        //
     }
 
-    public void DeviceFound(final Device dvc) {
+    public void deviceFound(final Device dvc) {
         try {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     adapter.add(dvc);
+                    devicesView.setSelection(devicesView.getCount() - 1);
+                }
+            });
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void clearFoundDevices() {
+        try {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.clear();
                     devicesView.setSelection(devicesView.getCount() - 1);
                 }
             });

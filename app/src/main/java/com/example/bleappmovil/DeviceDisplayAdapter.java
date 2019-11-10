@@ -16,7 +16,6 @@ public class DeviceDisplayAdapter extends BaseAdapter {
 
     List<Device> devices = new ArrayList<>();
     Context context;
-    String username;
 
     public DeviceDisplayAdapter(Context context) {
         this.context = context;
@@ -24,6 +23,11 @@ public class DeviceDisplayAdapter extends BaseAdapter {
 
     public void add(Device dvc) {
         this.devices.add(dvc);
+        notifyDataSetChanged(); // to render the list we need to notify
+    }
+
+    public void clear() {
+        this.devices.clear();
         notifyDataSetChanged(); // to render the list we need to notify
     }
 
