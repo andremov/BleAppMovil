@@ -1,4 +1,4 @@
-package com.example.bleappmovil;
+package com.example.bleappmovil.info;
 
 public class Req {
     /*
@@ -7,11 +7,11 @@ public class Req {
     UI: DONE!
     TODO: MAX
 
-    • The app must detect and present if the Bluetooth adapter is turned on/off
+    • The app must detect and present if the Bluetooth deviceAdapter is turned on/off
     UI: DONE!
     TODO: MAX
 
-    • The app must be able to turn on/off the Bluetooth adapter and require all the permissions
+    • The app must be able to turn on/off the Bluetooth deviceAdapter and require all the permissions
     needed to work
     TODO: MAX
 

@@ -1,14 +1,17 @@
-package com.example.bleappmovil;
+package com.example.bleappmovil.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.bleappmovil.R;
+import com.example.bleappmovil.activities.MainActivity;
+import com.example.bleappmovil.objects.LogMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +53,7 @@ public class LogAdapter  extends BaseAdapter {
         LayoutInflater messageInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         LogMessage msg = messages.get(i);
 
-        convertView = messageInflater.inflate(R.layout.log_item_layout, null);
+        convertView = messageInflater.inflate(R.layout.log_item, null);
         holder.msgtype = (TextView) convertView.findViewById(R.id.log_item_msgtype);
         holder.timestamp = (TextView) convertView.findViewById(R.id.log_item_timestamp);
         holder.body = (TextView) convertView.findViewById(R.id.log_item_msg);

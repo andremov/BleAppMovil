@@ -1,7 +1,8 @@
-package com.example.bleappmovil;
+package com.example.bleappmovil.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -12,11 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.example.bleappmovil.adapters.CharDisplayAdapter;
+import com.example.bleappmovil.adapters.DeviceDisplayAdapter;
+import com.example.bleappmovil.R;
+import com.example.bleappmovil.adapters.ServiceDisplayAdapter;
+import com.example.bleappmovil.fragments.ServiceFragment;
+import com.example.bleappmovil.objects.Characteristic;
+import com.example.bleappmovil.objects.Device;
+import com.example.bleappmovil.objects.LogMessage;
+import com.example.bleappmovil.objects.Service;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -24,19 +33,25 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    DeviceDisplayAdapter adapter;
+    DeviceDisplayAdapter deviceAdapter;
+    ServiceDisplayAdapter serviceAdapter;
+    CharDisplayAdapter charAdapter;
     ListView devicesView;
+    ListView servicesView;
+    ListView charView;
 
     public static List<LogMessage> log = new ArrayList<>();
 
     boolean bluetoothOn = true;
     boolean bluetoothSupport = true;
     int selectedDevice;
+    int selectedService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.toolbar_main);
+
 
         Button toggleBluetoothBtn = (Button) findViewById(R.id.toggle_bluetooth_btn);
         toggleBluetoothBtn.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         Button logsBtn = (Button) findViewById(R.id.logs_btn);
         logsBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent callingIntent =new Intent(getApplicationContext(), LogActivity.class);
+                Intent callingIntent = new Intent(getApplicationContext(), LogActivity.class);
                 startActivity(callingIntent);
             }
         });
@@ -67,10 +82,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
 
-        adapter = new DeviceDisplayAdapter(this);
+        deviceAdapter = new DeviceDisplayAdapter(this);
+        charAdapter = new CharDisplayAdapter(this);
+        serviceAdapter = new ServiceDisplayAdapter(this);
 
-        devicesView = ((ListView)findViewById(R.id.device_listing));
-        devicesView.setAdapter(adapter);
+        devicesView = ((ListView) findViewById(R.id.device_listing));
+        devicesView.setAdapter(deviceAdapter);
         devicesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -88,10 +105,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         scanDevices();
         testingValues();
+
     }
 
     protected void testingValues() {
-        // TESTING BULLSHIT INCOMING:
+        // TESTING BULLSH*T INCOMING:
 
         for (int i = 0; i < 20; i++) {
             deviceFound(new Device("Name" + i, "Mac!" + i, i % 4));
@@ -103,16 +121,39 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
     }
 
+    protected void testingValuesServices() {
+        // TESTING BULLSH*T INCOMING:
+
+        for (int i = 0; i < 10; i++) {
+            serviceFound(new Service("Service # " + i, "INFO"));
+        }
+    }
+
+    protected void testingValuesChars() {
+        // TESTING BULLSH*T INCOMING:
+        for (int i = 0; i < 10; i++) {
+            charFound(new Characteristic("Characteristic # " + i, "Testing", "00"+i,":)","R W N"));
+        }
+    }
+
     protected void logEvent(LogMessage msg) {
         MainActivity.log.add(msg);
     }
 
-    public void setSelectedDevice(int selectedDevice) {
-        this.selectedDevice = selectedDevice;
+    public void setSelectedDevice(int sel) {
+        this.selectedDevice = sel;
+    }
+
+    public void setSelectedService(int sel) {
+        this.selectedService = sel;
     }
 
     public Device getSelectedDevice() {
-        return (Device) adapter.getItem(selectedDevice);
+        return (Device) deviceAdapter.getItem(selectedDevice);
+    }
+
+    public Service getSelectedService() {
+        return (Service) serviceAdapter.getItem(selectedService);
     }
 
     protected void doPopUpMenu() {
@@ -145,6 +186,44 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
     }
 
+    protected void openServicesFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        ServiceFragment fragment = new ServiceFragment();
+        fragmentTransaction.add(R.id.service_viewer, fragment);
+        fragmentTransaction.commit();
+
+        serviceAdapter.clear();
+
+        servicesView = ((ListView)findViewById(R.id.services_listing));
+        servicesView.setAdapter(serviceAdapter);
+        servicesView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                setSelectedService((int) id);
+                openCharFragment();
+                return true;
+            }
+        });
+        testingValuesServices();
+    }
+
+    protected void openCharFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        ServiceFragment fragment = new ServiceFragment();
+        fragmentTransaction.add(R.id.char_viewer, fragment);
+        fragmentTransaction.commit();
+
+        charAdapter.clear();
+
+        charView = ((ListView)findViewById(R.id.char_listing));
+        charView.setAdapter(charAdapter);
+        testingValuesChars();
+    }
+
     protected void connectDevice() {
         Device dvc = getSelectedDevice();
 
@@ -153,6 +232,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
 
         //
+
+        openServicesFragment();
     }
 
     protected void disconnectDevice() {
@@ -190,12 +271,40 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         //
     }
 
-    public void deviceFound(final Device dvc) {
+    public void serviceFound(final Service item) {
         try {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    adapter.add(dvc);
+                    serviceAdapter.add(item);
+                    servicesView.setSelection(servicesView.getCount() - 1);
+                }
+            });
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void charFound(final Characteristic item) {
+        try {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    charAdapter.add(item);
+                    charView.setSelection(charView.getCount() - 1);
+                }
+            });
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void deviceFound(final Device item) {
+        try {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    deviceAdapter.add(item);
                     devicesView.setSelection(devicesView.getCount() - 1);
                 }
             });
@@ -209,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    adapter.clear();
+                    deviceAdapter.clear();
                     devicesView.setSelection(devicesView.getCount() - 1);
                 }
             });

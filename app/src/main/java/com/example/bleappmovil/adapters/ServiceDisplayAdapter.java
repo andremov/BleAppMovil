@@ -1,4 +1,4 @@
-package com.example.bleappmovil;
+package com.example.bleappmovil.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,36 +9,39 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bleappmovil.R;
+import com.example.bleappmovil.objects.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeviceDisplayAdapter extends BaseAdapter {
+public class ServiceDisplayAdapter extends BaseAdapter {
 
-    List<Device> devices = new ArrayList<>();
+    List<Service> services = new ArrayList<>();
     Context context;
 
-    public DeviceDisplayAdapter(Context context) {
+    public ServiceDisplayAdapter(Context context) {
         this.context = context;
     }
 
-    public void add(Device dvc) {
-        this.devices.add(dvc);
+    public void add(Service srvc) {
+        this.services.add(srvc);
         notifyDataSetChanged(); // to render the list we need to notify
     }
 
     public void clear() {
-        this.devices.clear();
+        this.services.clear();
         notifyDataSetChanged(); // to render the list we need to notify
     }
 
     @Override
     public int getCount() {
-        return devices.size();
+        return services.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return devices.get(i);
+        return services.get(i);
     }
 
     @Override
@@ -49,19 +52,17 @@ public class DeviceDisplayAdapter extends BaseAdapter {
     // This is the backbone of the class, it handles the creation of single ListView row (chat bubble)
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
-        DeviceViewHolder holder = new DeviceViewHolder();
+        ServiceViewHolder holder = new ServiceViewHolder();
         LayoutInflater messageInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        Device dvc = devices.get(i);
+        Service srvc = services.get(i);
 
-        convertView = messageInflater.inflate(R.layout.device_list_item_layout, null);
-        holder.name = (TextView) convertView.findViewById(R.id.device_list_item_layout_name);
-        holder.mac = (TextView) convertView.findViewById(R.id.device_list_item_layout_mac);
-        holder.signal = (TextView) convertView.findViewById(R.id.device_list_item_layout_signal);
+        convertView = messageInflater.inflate(R.layout.service_list_item, null);
+        holder.title = (TextView) convertView.findViewById(R.id.service_list_title);
+        holder.subtitle = (TextView) convertView.findViewById(R.id.service_list_subtitle);
 
         convertView.setTag(holder);
-        holder.name.setText( dvc.getName() );
-        holder.mac.setText( dvc.getMac() );
-        holder.signal.setText( dvc.getSignalString() );
+        holder.title.setText( srvc.getTitle() );
+        holder.subtitle.setText( srvc.getSubtitle() );
 
         return convertView;
     }
@@ -72,8 +73,7 @@ public class DeviceDisplayAdapter extends BaseAdapter {
 }
 
 
-class DeviceViewHolder {
-    public TextView name;
-    public TextView mac;
-    public TextView signal;
+class ServiceViewHolder {
+    public TextView title;
+    public TextView subtitle;
 }

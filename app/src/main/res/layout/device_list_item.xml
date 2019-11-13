@@ -48,7 +48,12 @@
             android:layout_marginTop="5dp"
             android:text="@string/device_list_item_mac"
             android:textSize="12sp" />
-
+<!--
+        <fragment android:name="com.example.bleappmovil.fragments.ServiceFragment"
+            android:id="@+id/fragment_viewer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+-->
     </LinearLayout>
 
 </RelativeLayout>

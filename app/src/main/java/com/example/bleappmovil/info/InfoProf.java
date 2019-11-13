@@ -1,4 +1,4 @@
-package com.example.bleappmovil;
+package com.example.bleappmovil.info;
 
 public class InfoProf {
 
@@ -29,7 +29,7 @@ public class InfoProf {
         return false;
     }
 
-•	The app must detect and present if the Bluetooth adapter is turned on/off
+•	The app must detect and present if the Bluetooth deviceAdapter is turned on/off
 
 	public static boolean RequestBluetoothDeviceEnable(final Activity activity){
         try{

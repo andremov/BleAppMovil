@@ -1,4 +1,4 @@
-package com.example.bleappmovil;
+package com.example.bleappmovil.objects;
 
 public class LogMessage {
     private String body;

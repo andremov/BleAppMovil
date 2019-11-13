@@ -10,6 +10,14 @@
     <string name="device_list_item_name">!Device_Name!</string>
     <string name="device_list_item_mac">!MAC_Address!</string>
 
+    <string name="service_list_item_title">!Service_Title!</string>
+    <string name="service_list_item_subtitle">!Service_Subtitle!</string>
+
+    <string name="char_list_item_title">!Char_Title!</string>
+    <string name="char_list_item_subtitle">!Char_Subtitle!</string>
+    <string name="char_list_item_props">!R/W/N!</string>
+    <string name="char_list_item_uuid">!UUID!</string>
+    <string name="char_list_item_descriptor">!DESCRIPTOR!</string>
 
     <string name="menu_scan">Start Scan</string>
     <string name="menu_unscan">Stop Scan</string>
